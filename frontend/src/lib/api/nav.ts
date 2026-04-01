@@ -13,7 +13,7 @@ export const topNavData: TopNav = {
     }
   },
   link: [
-    { text: "Home", href: "/", external: false },
+    { text: "Home", href: "/home", external: false },
     { text: "Dashboard", href: "/dashboard", external: false },
     { text: "About", href: "/about", external: false }
   ],

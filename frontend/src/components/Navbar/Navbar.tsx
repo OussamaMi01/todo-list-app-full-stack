@@ -19,7 +19,7 @@ export async function Navbar() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo - Mobile & Desktop */}
           <Link
-            href={logo.href || "/"}
+            href={logo.href || "/home"}
             className="flex items-center gap-2.5 flex-shrink-0 group"
           >
             <span className="relative flex items-center justify-center w-8 h-8">
