@@ -1,43 +1,79 @@
-// app/api/nav/route.ts (for App Router)
-import { NextResponse } from 'next/server';
+// lib/api/nav.ts
+import type { TopNav, FooterData } from "@/types/nav";
 
-const defaultNavData = {
+// Define your navigation data locally
+export const topNavData: TopNav = {
   logoLink: {
-    text: "TodoApp",
-    href: "/",
+    text: "Checki",
+    href: "/marketing",
     image: {
-      url: "/logo.png",
-      name: "TodoApp Logo",
-      alternativeText: "TodoApp Logo"
+      url: "/img/logo.png",
+      name: "Checki Logo",
+      alternativeText: "Checki Logo"
     }
   },
   link: [
     { text: "Home", href: "/", external: false },
-    { text: "Features", href: "/features", external: false },
-    { text: "Pricing", href: "/pricing", external: false },
+    { text: "Features", href: "/marketing#features", external: false },
     { text: "About", href: "/about", external: false }
   ],
   cta: {
-    text: "Get Started",
-    href: "/signup",
+    text: "Create Task",
+    href: "/tasks/new",
     external: false
   }
 };
 
-export async function GET() {
-  try {
-     const response = await fetch('http://localhost:4000/graphql', {
-       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-    query: `query { topnav { logoLink { text href image { url alternativeText name } } link { text href external } cta { text href external } } }`
-       })
-     });
-     const data = await response.json();
-     return NextResponse.json(data.data.topnav);
+export const footerData: FooterData = {
+  logoLink: {
+    text: "Checki",
+    href: "/marketing",
+    image: {
+      url: "/img/logo.png",
+      name: "Checki Logo",
+      alternativeText: "Checki Logo"
+    }
+  },
+  tagline: "Manage your tasks efficiently and stay productive with Checki.",
+  columns: [
+    {
+      heading: "Product",
+      links: [
+        { text: "Features", href: "/marketing#features", external: false },
+      
+      
+      ]
+    },
+    {
+      heading: "Company",
+      links: [
+        { text: "About", href: "/about", external: false },
+        { text: "Blog", href: "/blog", external: false },
+        { text: "Contact", href: "/contact", external: false }
+      ]
+    },
+    {
+      heading: "Resources",
+      links: [
+        { text: "Documentation", href: "/docs", external: false },
+        { text: "Support", href: "/support", external: false },
+        { text: "API", href: "/api", external: false },
+        { text: "Status", href: "/status", external: false }
+      ]
+    }
+  ],
+  
+  legal: [
+    { text: "Privacy Policy", href: "/privacy", external: false },
+    { text: "Terms of Service", href: "/terms", external: false }
+  ],
+  copyright: "© {year} Checki. All rights reserved."
+};
 
-  } catch (error) {
-    console.error('Error fetching nav data:', error);
-    return NextResponse.json(defaultNavData);
-  }
+export async function getTopNav(): Promise<TopNav> {
+  return topNavData;
+}
+
+export async function getFooterData(): Promise<FooterData> {
+  return footerData;
 }
