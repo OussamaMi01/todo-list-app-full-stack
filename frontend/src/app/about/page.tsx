@@ -17,7 +17,7 @@ export default function AboutPage() {
             About Checki
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            We're on a mission to help people achieve more with less stress.
+            We&apos;re on a mission to help people achieve more with less stress.
           </p>
         </motion.div>
 
