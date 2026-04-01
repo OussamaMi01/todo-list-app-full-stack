@@ -26,16 +26,43 @@ const server = new ApolloServer({
 });
 
 await server.start();
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://checki-todo.vercel.app/'
+];
+app.get('/', (_, res) => {
+  res.json({
+    name: 'Todo List API',
+    version: '1.0.0',
+    status: 'running',
+    endpoints: {
+      graphql: '/graphql',
+      health: '/health'
+    }
+  });
+});
 
 app.use(
   '/graphql',
   cors({
-    origin: ['http://localhost:3000'],
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps or curl)
+      if (!origin) return callback(null, true);
+      
+      if (allowedOrigins.includes(origin) || process.env.NODE_ENV !== 'production') {
+        callback(null, true);
+      } else {
+        console.log('CORS blocked:', origin);
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   }),
   bodyParser.json(),
   expressMiddleware(server)
 );
+
+
 
 // Health check endpoint
 app.get('/health', (_, res) => {
@@ -45,4 +72,4 @@ app.get('/health', (_, res) => {
 const PORT = process.env.PORT || 4000;
 
 await new Promise((resolve) => httpServer.listen({ port: PORT }, resolve));
-console.log(`🚀 Server ready at http://localhost:${PORT}/graphql`);
+console.log(`🚀 Server ready at https://todo-backend-prod.up.railway.app/graphql`);
