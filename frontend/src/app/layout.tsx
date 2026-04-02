@@ -27,7 +27,6 @@ export default function RootLayout({
           <Providers>
             <Navbar />
             <main className="min-h-screen">
-
               {children}
             </main>
             <Footer data={footerData} />
